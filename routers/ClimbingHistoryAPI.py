@@ -38,6 +38,7 @@ def read_all_climbing_history(skip: int = 0, limit: int = 10, db: Session = Depe
         # Route 정보를 추가합니다.
         history_dict['crag_id'] = route.crag_id
         history_dict['difficulty_level'] = route.difficulty_level
+        history_dict['route_name'] = route.route_name
         histories_with_route_info.append(ClimbingHistoryModel(**history_dict))
     
     return histories_with_route_info
@@ -65,6 +66,7 @@ def read_climbing_history(user_id: str, db: Session = Depends(get_db)):
         # Route 정보를 추가합니다.
         history_dict['crag_id'] = route.crag_id
         history_dict['difficulty_level'] = route.difficulty_level
+        history_dict['route_name'] = route.route_name
         histories_with_route_info.append(ClimbingHistoryModel(**history_dict))
     
     return histories_with_route_info

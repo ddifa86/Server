@@ -32,6 +32,7 @@ class ClimbingHistoryModel(BaseModel):
     completion_status: bool
     difficulty_level: float  # 난이도 레벨 필드 추가
     crag_id: str  # Crag ID 필드 추가
+    route_name : str # route_name 필드 추가
 
     class Config:
         from_attributes = True
