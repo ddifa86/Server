@@ -35,7 +35,20 @@ def read_climbing_detail_history(climbing_id: str, db: Session = Depends(get_db)
     climbing_history = db.query(ClimbingDetailHistory).filter_by(climbing_id=climbing_id).all()
     if not climbing_history:
         raise HTTPException(status_code=404, detail="등록된 ClimbingDetailHistory를 찾을 수 없습니다.")
-    return climbing_history
+    
+    # ClimbingDetailHistory 객체에서 'tag_time' 필드를 ISO 8601 형식의 문자열로 변환하여 반환
+    climbing_history_with_string_tag_time = [
+        ClimbingDetailHistoryModel(
+            climbing_id=item.climbing_id,
+            route_id=item.route_id,
+            hold_id=item.hold_id,
+            tag_time=item.tag_time.strftime('%Y-%m-%dT%H:%M:%SZ'),  # ISO 8601 형식으로 변환
+            hold_seq=item.hold_seq
+        )
+        for item in climbing_history
+    ]     
+  
+    return climbing_history_with_string_tag_time
 
 
 # ClimbingHistoryModel와 List<ClimbingDetailHistoryModel>을 한 번에 생성하는 API
@@ -85,3 +98,4 @@ def create_climbing_history_with_details(
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail="저장에 실패했습니다.")
+

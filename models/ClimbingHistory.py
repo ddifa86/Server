@@ -19,6 +19,7 @@ class ClimbingHistory(Base):
     progress = Column(Float)
     completion_status = Column(Boolean)
 
+
 class ClimbingHistoryModel(BaseModel):
     climbing_id: str
     route_id: str
@@ -29,6 +30,8 @@ class ClimbingHistoryModel(BaseModel):
     climbing_time: float
     progress: float
     completion_status: bool
+    difficulty_level: float  # 난이도 레벨 필드 추가
+    crag_id: str  # Crag ID 필드 추가
 
     class Config:
         from_attributes = True

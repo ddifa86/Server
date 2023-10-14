@@ -24,8 +24,16 @@ def read_all_routes(skip: int = 0, limit: int = 10, db: Session = Depends(get_db
 
 # 특정 Route 정보를 조회하는 API
 @router.get("/route/{crag_id}", response_model=List[RouteModel])
-def read_route(crag_id: str, db: Session = Depends(get_db)):
+def read_route_by_crag(crag_id: str, db: Session = Depends(get_db)):
     route = db.query(Route).filter_by(crag_id=crag_id).all()
+    if not route:
+        raise HTTPException(status_code=404, detail="등록된 Route를 찾을 수 없습니다.")
+    return route
+
+# 특정 Route 정보를 조회하는 API
+@router.get("/routeID/{route_id}", response_model=RouteModel)
+def read_route_by_crag(route_id: str, db: Session = Depends(get_db)):
+    route = db.query(Route).filter_by(route_id=route_id).first()
     if not route:
         raise HTTPException(status_code=404, detail="등록된 Route를 찾을 수 없습니다.")
     return route
