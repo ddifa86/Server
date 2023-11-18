@@ -27,10 +27,18 @@ def get_user(user_id: str, password: str, db: Session = Depends(get_db)):
 
 @router.post("/users", response_model=UserModel)
 def create_user(user: UserModel, db: Session = Depends(get_db)):
-    db.add(user)
+    db_user = User(
+        user_id=user.user_id,
+        password=user.password,
+        name=user.name,
+        role=user.role,
+        crew=user.crew,
+        leadlevel=user.leadlevel
+    )
+    db.add(db_user)
     db.commit()
-    db.refresh(user)
-    return user
+    db.refresh(db_user)
+    return db_user
 
 @router.put("/users/{user_id}", response_model=UserModel)
 def update_user(user_id: str, updated_user: UserModel, db: Session = Depends(get_db)):

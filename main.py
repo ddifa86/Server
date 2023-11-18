@@ -9,6 +9,7 @@ from routers.RouteHoldAPI import router as routehold_router
 from routers.ClimbingDetailAPI import router as ClimbingDetail_router
 from routers.ClimbingHistoryAPI import router as Climbing_router
 
+from routers.UserClimbDiaryAPI import router as diary_router
 
 app = FastAPI() 
 
@@ -20,6 +21,7 @@ app.include_router(route_router)
 app.include_router(routehold_router)
 app.include_router(ClimbingDetail_router)
 app.include_router(Climbing_router)
+app.include_router(diary_router) 
 
  
 
